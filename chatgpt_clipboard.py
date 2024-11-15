@@ -5,6 +5,7 @@ from PIL import Image
 from io import BytesIO
 from dotenv import load_dotenv
 import os
+import sys
 
 system_prompt = '''
 Please answer question in this image. Response shouldn't be like an AI assistant; just answer is enough.
@@ -14,7 +15,24 @@ Write answer accouding to the marks of the question.
 '''
 
 
-load_dotenv(dotenv_path='.env', override=True)
+# Path to the .env file
+env_file = '.env'
+
+# Check if the .env file exists
+if not os.path.exists(env_file):
+    # Print a warning
+    print(f"Warning: {env_file} file not found. Creating a new one.")
+    
+    # Create a basic .env file
+    with open(env_file, 'w') as file:
+        file.write(" OPENAI_API_KEY=apikey\n")
+
+    # Exit the script with a warning message
+    print(f"{env_file} created. Please configure it before running the script.")
+    sys.exit(1)  # Exit with a non-zero status to indicate an error
+
+
+load_dotenv()
 
 # Code of your application, which uses environment variables (e.g. from `os.environ` or
 # `os.getenv`) as if they came from the actual environment.
