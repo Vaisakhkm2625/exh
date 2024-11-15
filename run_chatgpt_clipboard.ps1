@@ -1,6 +1,12 @@
-# Define the path to the virtual environment
-$venvPath = ".\venv"  # Change this to your virtual environment folder
-$scriptPath = ".\main.py"  # Path to your Python script
+# Get the directory of the script
+$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+
+# Change to the script's directory
+Set-Location $scriptDir
+
+# Define the virtual environment and Python script paths (relative to the script location)
+$venvPath = Join-Path $scriptDir "venv"  # Adjust if your virtual environment folder is named differently
+$scriptPath = Join-Path $scriptDir "./chatgpt_clipboard.py"  # Adjust to your Python script's name
 
 # Check if the virtual environment exists
 if (-Not (Test-Path $venvPath)) {
